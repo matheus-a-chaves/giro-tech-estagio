@@ -1,0 +1,49 @@
+1. Buscar os nomes de todos os alunos que frequentam alguma turma do professor 'JOAO PEDRO'.
+SELECT A.Nome, T.DISCIPLINA_id, P.nome FROM
+aluno A INNER JOIN turma T 
+ON
+T.ALUNO_id = A.id INNER JOIN professor P 
+ON
+T.PROFESSOR_id = P.id 
+WHERE 
+P.nome = 'JOAO PEDRO'
+
+2. Buscar os dias da semana que tenham aulas da disciplina 'MATEMATICA'.
+SELECT T.dia_da_semana FROM
+disciplina D INNER JOIN turma T
+ON
+T.DISCIPLINA_id = D.id 
+WHERE D.nome = 'MATEMATICA'
+
+3. Buscar todos os alunos que frequentem aulas de 'MATEMATICA' e também 'FISICA'.
+SELECT A.Nome, D.nome FROM 
+disciplina D INNER JOIN turma T 
+ON 
+T.DISCIPLINA_id = D.id 
+INNER JOIN aluno A 
+ON 
+T.ALUNO_id = A.id 
+WHERE D.nome IN('FISICA','MATEMATICA')
+
+
+4. Buscar as disciplinas que não tenham nenhuma turma.
+SELECT D.nome, T.DISCIPLINA_id FROM 
+disciplina D LEFT JOIN turma T 
+ON 
+D.id = T.DISCIPLINA_id 
+UNION
+SELECT D.nome, T.DISCIPLINA_id FROM
+disciplina D RIGHT JOIN 
+turma T 
+ON 
+D.id = T.DISCIPLINA_id 
+WHERE T.DISCIPLINA_id = NULL
+
+5. Buscar os alunos que frequentem aulas de 'MATEMATICA' exceto os que frequentem 'QUIMICA'.
+SELECT A.Nome FROM
+disciplina D INNER JOIN turma T
+ON
+T.DISCIPLINA_id = D.id
+INNER JOIN aluno A
+ON T.ALUNO_id = A.id
+WHERE D.nome = 'MATEMATICA' AND D.nome <> 'QUIMICA'
